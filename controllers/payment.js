@@ -3,7 +3,6 @@ const Order=require('../models/Order')
 const axios = require('axios');
 require('dotenv').config();
 
-
 STRIPE_KEY=process.env.STRIPE_KEY
 STRIPE_API_VERSION=process.env.STRIPE_API_VERSION
 const stripe = require("stripe")(STRIPE_KEY, {
