@@ -2,11 +2,12 @@ const User = require('../models/User');
 const Order=require('../models/Order')
 const axios = require('axios');
 require('dotenv').config();
-// Server-side code
-// 
+
+
 STRIPE_KEY=process.env.STRIPE_KEY
+STRIPE_API_VERSION=process.env.STRIPE_API_VERSION
 const stripe = require("stripe")(STRIPE_KEY, {
-    apiVersion: "2025-04-30.basil",
+    apiVersion: STRIPE_API_VERSION,
   });
 
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
