@@ -80,5 +80,8 @@ router.patch('/users/payment/method', auth, setUpPaymentMethod)
 router.post('/users/order/create/payment', auth, CreatePayment)
 router.get('/users/paystack/verify/:reference', auth, VerifyPayment)
 router.get("/users/paymentComplete", VerifyPayment)
+router.get("/test",(req, res)=>{
+    res.send("Welcome to ziman APIs")
+})
 
 module.exports = router;
