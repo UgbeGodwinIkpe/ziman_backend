@@ -1,9 +1,10 @@
 const User = require('../models/User');
 const Order=require('../models/Order')
 const axios = require('axios');
+require('dotenv').config();
 // Server-side code
 // This is your test secret API key.
-const stripe = require("stripe")("sk_test_51IaKWrF3UDMLO7wfqQEiLyjP3VGQx60rLq5h7Zj4CZr9y1EDlS3e280vaxoot2fSsto5XMK8b022ioS5h5TCr3Jw00ZbCM4rux", {
+const stripe = require("stripe")(process.env.STRIPE_KEY, {
     apiVersion: "2025-04-30.basil",
   });
 
