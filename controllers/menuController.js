@@ -39,3 +39,10 @@ exports.getMenuItem = async (req, res) => {
   console.log(items)
   res.json(items);
 };
+
+exports.getMenus = async (req, res) => {
+  console.log(req.params.buzId)
+  const menus = await MenuItem.find({ restaurant: req.params.buzId });
+  console.log(menus)
+  res.json(menus);
+};
