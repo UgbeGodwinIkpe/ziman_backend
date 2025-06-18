@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/authMiddleware');
 const admAuth=require("../middleware/adminAuth")
 const upload=require('../middleware/upload')
-const { addMenuItem, getMenuItems, updatePrice, deleteMenuItem , getMenuItem} = require('../controllers/menuController');
+const { addMenuItem, getMenuItems, updatePrice, deleteMenuItem , getMenuItem, getMenus} = require('../controllers/menuController');
 
 
 
