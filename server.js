@@ -56,7 +56,12 @@ const notificationRoutes=require('./routes/notificationRoutes')
 const riderRoutes=require("./routes/riderRoutes")
 
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: ['http://127.0.0.1:5500'], // Allow this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 app.use(express.json());
 // app.use(bodyParser.json());
 // Routes
