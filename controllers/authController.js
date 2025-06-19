@@ -28,9 +28,9 @@ const sendVerificationEmail = async (userEmail, username) => {
       <h4>Hi ${username}, welcome to ziman app.</h4>
       <p>Your verification code is:</p>
       <h1 style="color: blue;">${verificationCode}</h1>
-      <p>This code expires in 10 minutes.</p><br><br>
-
-      <h5>Regards!<br>Developer Team</h5>
+      <p>This code expires in 10 minutes.</p><br>
+      <hr>
+      <h5>Regards!<br>Godwin Ikpe Ugbe<br>Software Engineer</h5>
       
 
 
@@ -69,6 +69,19 @@ exports.register = async (req, res) => {
     
    }
 };
+
+exports.verifyEmail=async(req, res)=>{
+  try {
+    const vcode=req.body.verificationCode
+    const verified = await User.findOne({verificatin_code: vcode });
+    if (verified) return res.status(200).json({ message: 'Email verification successfulled.' });
+    return res.status(400).json({message:"Bad request."})
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;

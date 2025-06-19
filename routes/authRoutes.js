@@ -66,12 +66,13 @@
  */
 
 const express = require('express');
-const { register, login, editProfile, changePassword, deleteMyAccount } = require('../controllers/authController');
+const { register, login, editProfile, changePassword, deleteMyAccount, verifyEmail } = require('../controllers/authController');
 const {setUpPaymentMethod, CreatePayment, VerifyPayment}=require('../controllers/payment')
 const auth = require('../middleware/authMiddleware');
 const router = express.Router();
 
 router.post('/register', register);
+router.post('/verify_email', verifyEmail)
 router.post('/login', login);
 router.patch('/users/profile', auth, editProfile)
 router.patch('/users/password', auth, changePassword)
