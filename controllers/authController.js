@@ -2,6 +2,50 @@ const User = require('../models/User');
 const Order = require('../models/Order');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
+
+// Generate a 6-digit code
+const generateVerificationCode = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+const sendVerificationEmail = async (userEmail, username) => {
+  const verificationCode = generateVerificationCode();
+
+  // Setup transporter (using Gmail)
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "ugbegodwin7963@gmail.com",        // your Gmail
+      pass: process.env.GOOGLE_AUTH,          // use App Password, not your real password
+    },
+  });
+
+  const mailOptions = {
+    from: "Ziman App ugbegodwin7963@gmail.com",
+    to: userEmail,
+    subject: "Your Verification Code",
+    html: `
+      <h2>Email Verification</h2>
+      <h4>Hi ${username}, welcome to ziman app.</h4>
+      <p>Your verification code is:</p>
+      <h1 style="color: blue;">${verificationCode}</h1>
+      <p>This code expires in 10 minutes.</p><br><br>
+
+      <h5>Regards!<br>Developer Team</h5>
+      
+
+
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Verification email sent to:", userEmail);
+    return verificationCode;
+  } catch (error) {
+    console.error("Email error:", error);
+    throw error;
+  }
+};
 
 exports.register = async (req, res) => {
    try {
@@ -10,11 +54,15 @@ exports.register = async (req, res) => {
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ message: 'Email already in use' });
     const hashed = await bcrypt.hash(password, 10);
-    const user = new User({ username, fullName, email, password: hashed, role, refid: crypto.randomUUID() });
-    await user.save();
-    console.log(user)
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.status(201).json({user:user,token:token, message: 'User registered' });
+    const vcode= await sendVerificationEmail(email, username)
+    if(vcode){
+      const user = new User({ username, fullName, email, password: hashed, role, verificatin_code:vcode, refid: crypto.randomUUID() });
+      await user.save();
+      console.log(user)
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+      res.status(201).json({user:user,token:token, message: 'User registered' });
+
+    }
     
    } catch (error) {
     console.log(error)

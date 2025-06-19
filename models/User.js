@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   password: {type: String, default:null},
   address:String,
   role: { type: String, enum: ['customer', 'delivery', 'admin'], default: 'customer' },
+  verificatin_code:{type:String, require:true},
   phoneNumber:{type: String, default:null},
   paymentMethod: [paymentMethodSchema],
   refid: String,
