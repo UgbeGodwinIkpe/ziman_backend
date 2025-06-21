@@ -64,6 +64,7 @@ exports.getOrderItems = async (req, res) => {
 exports.getUserOrders = async (req, res) => {
   // console.log(req.user)
   const orders = await Order.find({ customer: req.user.id }).sort({ createdAt: -1 });
+  console.log({User_orders:orders})
   res.json(orders);
 };
 
