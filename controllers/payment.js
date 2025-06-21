@@ -49,7 +49,7 @@ exports.CreatePayment= async (req, res) => {
         {
           email,
           amount: amount * 100, // Convert to kobo
-          callback_url: "http://localhost:5000/api/auth/users/paymentComplete"
+          callback_url: "https://ziman-backend.onrender.com/api/auth/users/paymentComplete"
         },
         {
           headers: {
