@@ -88,8 +88,126 @@ exports.VerifyPayment= async (req, res) => {
         //update order
         const order=await Order.findOneAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
         console.log("Order Status: ", order)
+
+        // send response to user
+        const html = `
+          <!Doctype html>
+          <html lang='en'>
+            <head>
+              <title>Payment Succuccfulled</title>
+              <meta
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+                name="viewport"
+              >
+            </head>
+            <body style="font-family: Arial; padding: 5px; justify-content:center">
+              <div style="background:blue; color:white; margin: 30px auto 0px auto; padding:15px; width:fit-content; text-align:center;">
+                <h1>Success</h1>
+                <h2>Your payment was successful and has been confirmed: ${response.data.data.amount}</h2>
+                <p>Thank you for trusting ziman</p>
+                <a href="https://ziman.com.ng" style="background:green; color:white; padding:10px; text-decoration:none;">Return Back to App</a>
+              </div>
+
+              
+            </body>
+          </html>
+        `;
+
+        return res.send(html);
       }
-      res.json(response.data);
+      
+    res.json(response.data);
+      /*
+      Response Data:
+      {
+        "status": true,
+        "message": "Verification successful",
+        "data": {
+          "id": 5077546449,
+          "domain": "test",
+          "status": "success",
+          "reference": "rehoxli38k",
+          "receipt_number": null,
+          "amount": 5390000,
+          "message": null,
+          "gateway_response": "Successful",
+          "paid_at": "2025-06-21T21:11:42.000Z",
+          "created_at": "2025-06-21T21:09:03.000Z",
+          "channel": "card",
+          "currency": "NGN",
+          "ip_address": "102.91.77.204",
+          "metadata": "",
+          "log": {
+            "start_time": 1750540295,
+            "time_spent": 7,
+            "attempts": 1,
+            "errors": 0,
+            "success": true,
+            "mobile": false,
+            "input": [],
+            "history": [
+              {
+                "type": "action",
+                "message": "Attempted to pay with card",
+                "time": 6
+              },
+              {
+                "type": "success",
+                "message": "Successfully paid with card",
+                "time": 7
+              }
+            ]
+          },
+          "fees": 90850,
+          "fees_split": null,
+          "authorization": {
+            "authorization_code": "AUTH_v7wpmqo2bv",
+            "bin": "408408",
+            "last4": "4081",
+            "exp_month": "12",
+            "exp_year": "2030",
+            "channel": "card",
+            "card_type": "visa ",
+            "bank": "TEST BANK",
+            "country_code": "NG",
+            "brand": "visa",
+            "reusable": true,
+            "signature": "SIG_KS81veMWqUZUujxG59bg",
+            "account_name": null
+          },
+          "customer": {
+            "id": 283041629,
+            "first_name": null,
+            "last_name": null,
+            "email": "cidus@gmail.com",
+            "customer_code": "CUS_ht8obqzstgjmhzw",
+            "phone": null,
+            "metadata": null,
+            "risk_action": "default",
+            "international_format_phone": null
+          },
+          "plan": null,
+          "split": {
+
+          },
+          "order_id": null,
+          "paidAt": "2025-06-21T21:11:42.000Z",
+          "createdAt": "2025-06-21T21:09:03.000Z",
+          "requested_amount": 5390000,
+          "pos_transaction_data": null,
+          "source": null,
+          "fees_breakdown": null,
+          "connect": null,
+          "transaction_date": "2025-06-21T21:09:03.000Z",
+          "plan_object": {
+
+          },
+          "subaccount": {
+
+          }
+        }
+      }
+      */
     } catch (error) {
       res.status(500).json({ error: error.response.data });
     }
