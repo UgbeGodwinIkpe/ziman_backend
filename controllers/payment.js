@@ -101,9 +101,9 @@ exports.VerifyPayment= async (req, res) => {
               >
             </head>
             <body style="font-family: Arial; padding: 5px; justify-content:center">
-              <div style="background:green; color:white; margin: 30px auto 0px auto; padding:15px; width:fit-content; text-align:center;">
+              <div style="background:green; color:white; margin: 10px auto 0px auto; padding:15px 15px 30px 15px; width:fit-content; text-align:center;">
                 <h1>Payment Successful</h1>
-                <h2>Your payment has been confirmed: <del>N</del>${response.data.data.amount/100}</h2>
+                <h4>Your payment has been confirmed: <del>N</del>${response.data.data.amount/100}</h4>
                 <p>Thank you for trusting ziman</p>
                 <a href="https://ziman.com.ng" style="background:white; color:green; padding:10px; text-decoration:none;">Return Back to App</a>
               </div>
