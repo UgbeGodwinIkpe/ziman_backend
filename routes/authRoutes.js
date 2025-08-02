@@ -84,6 +84,9 @@ router.get('/users/paystack/verify/:reference', auth, VerifyPayment)
 router.get("/users/paymentComplete", VerifyPayment)
 router.get("/test",(req, res)=>{
     res.send("Welcome to ziman APIs")
+});
+router.get("/test2",(req, res)=>{
+    res.send("Welcome to ziman APIs test 2")
 })
 
 module.exports = router;
