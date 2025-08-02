@@ -68,7 +68,7 @@ const sendForgttenPasswordEmail = async (userEmail, userId) => {
       <h4>Hi there, </h4>
       <h5>You just requested for a password reset. Ignore if it was not you.</h5>
       <p>Kindy click the link below to reset your password</p>
-      <a style="text-decoration:none; background:blue; padding:5px; color:white;" href="https://ziman.com.ng/${userId}/${verificationCode}">${verificationCode}</a>
+      <a style="text-decoration:none; background:blue; padding:5px; color:white;" href="https://ziman.com.ng/${userId}/${verificationCode}">Reset Password</a>
       <hr>
       <b>Or</b> copy the link and paste on your browser:
       <p>https://ziman.com.ng/${userId}/${verificationCode}</p><br>
@@ -114,7 +114,7 @@ exports.register = async (req, res) => {
 };
 
 // forgotten pasword
-exports.forgotenPassword = async (req, res) => {
+exports.forgottenPassword = async (req, res) => {
    try {
      const {email} = req.body;
      const existing = await User.findOne({ email });
