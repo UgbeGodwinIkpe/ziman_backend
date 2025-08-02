@@ -74,7 +74,7 @@ const router = express.Router();
 router.post('/register', register);
 router.post('/verify_email', verifyEmail)
 router.post('/login', login);
-router.post("/forgotpassword", forgotenPassword)
+router.post('/forgotpassword', forgotenPassword)
 router.patch('/users/profile', auth, editProfile)
 router.patch('/users/password', auth, changePassword)
 router.delete('/users/delete/myaccount', auth, deleteMyAccount)
