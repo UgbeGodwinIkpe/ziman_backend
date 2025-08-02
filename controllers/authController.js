@@ -209,6 +209,35 @@ exports.editProfile=async (req, res) => {
   }
 };
 
+// reset password controller
+exports.resetPassword=async (req, res) => {
+  try {
+    // const userId = req.params;
+    console.log("ID",userId)
+    const {password, confirmPassword, userId}=req.body
+    if(password.length<6){
+      return res.status(409).json({ message: 'Password must be at least 6 chars long!' });
+    }else if(password != confirmPassword){
+      return res.status(409).json({ message: 'Passwords don\'t match!' });
+    }else{
+      const hashed = await bcrypt.hash(password, 10);
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'Something went wrong' });
+      }
+        user.password = hashed;
+        await user.save();
+
+        console.log(user)
+        res.status(203).json({message:"Password reset successfulled. You can now return back to the mobile app and login."});
+      }
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 
 // Change password controller
 exports.changePassword=async (req, res) => {

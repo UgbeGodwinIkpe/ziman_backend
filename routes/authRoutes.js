@@ -66,7 +66,7 @@
  */
 
 const express = require('express');
-const { register, login, editProfile, changePassword, deleteMyAccount, verifyEmail, forgottenPassword } = require('../controllers/authController');
+const { register, login, editProfile, changePassword, deleteMyAccount, verifyEmail, forgottenPassword, resetPassword } = require('../controllers/authController');
 const {setUpPaymentMethod, CreatePayment, VerifyPayment}=require('../controllers/payment')
 const auth = require('../middleware/authMiddleware');
 const router = express.Router();
@@ -85,8 +85,6 @@ router.get("/users/paymentComplete", VerifyPayment)
 router.get("/test",(req, res)=>{
     res.send("Welcome to ziman APIs")
 });
-router.get("/test2",(req, res)=>{
-    res.send("Welcome to ziman APIs test 2")
-})
+router.post("/reset_passwrd",resetPassword);
 
 module.exports = router;
