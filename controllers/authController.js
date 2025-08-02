@@ -124,7 +124,7 @@ exports.forgottenPassword = async (req, res) => {
       // const hashed = await bcrypt.hash(password, 10);
       const vcode= await sendForgottenPasswordEmail(email, existing._id)
       if(vcode){
-        return res.status(201).json({user:existing, message: 'Check your email address for further instructions.' });
+        return res.status(201).json({message: 'Check your email address for further instructions.' });
       }else{
         return res.status(501).json({message: 'Something went wrong. Try again later!' });
       }
