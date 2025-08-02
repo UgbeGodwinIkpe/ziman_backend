@@ -68,10 +68,10 @@ const sendForgottenPasswordEmail = async (userEmail, userId) => {
       <h4>Hi there, </h4>
       <h5>You just requested for a password reset. Ignore if it was not you.</h5>
       <p>Kindy click the link below to reset your password</p>
-      <a style="text-decoration:none; background:blue; padding:5px; color:white;" href="https://ziman.com.ng/${userId}/${verificationCode}">Reset Password</a>
+      <a style="text-decoration:none; background:blue; padding:5px; color:white;" href="https://ziman.com.ng/resetpass.html?u=${userId}?c=${verificationCode}">Reset Password</a>
       <hr>
       <b>Or</b> copy the link and paste on your browser:
-      <p>https://ziman.com.ng/${userId}/${verificationCode}</p><br>
+      <p>https://ziman.com.ng/resetpass.html?u=${userId}?c=${verificationCode}</p><br>
       <hr>
       <h5>Regards!<br>Godwin Ikpe Ugbe<br><i>For Ziman Developers Team</i></h5>
       
@@ -216,25 +216,25 @@ exports.resetPassword=async (req, res) => {
     console.log("ID",userId)
     const {password, confirmPassword, userId}=req.body
     if(password.length<6){
-      return res.status(409).json({ message: 'Password must be at least 6 chars long!' });
+      return res.status(409).json({statusCde:409, message: 'Password must be at least 6 chars long!' });
     }else if(password != confirmPassword){
-      return res.status(409).json({ message: 'Passwords don\'t match!' });
+      return res.status(409).json({statusCde:409,  message: 'Passwords don\'t match!' });
     }else{
       const hashed = await bcrypt.hash(password, 10);
       const user = await User.findById(userId);
       if (!user) {
-        return res.status(404).json({ message: 'Something went wrong' });
+        return res.status(404).json({statusCde:404,  message: 'Something went wrong' });
       }
         user.password = hashed;
         await user.save();
 
         console.log(user)
-        res.status(203).json({message:"Password reset successfulled. You can now return back to the mobile app and login."});
+        res.status(203).json({statusCde:203, message:"Password reset successfulled. You can now return back to the mobile app and login."});
       }
     
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({statusCde:500, message: 'Internal Server Error' });
   }
 };
 
