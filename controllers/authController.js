@@ -47,7 +47,7 @@ const sendVerificationEmail = async (userEmail, username) => {
   }
 };
 // send frgtten passwrd ink
-const sendForgttenPasswordEmail = async (userEmail, userId) => {
+const sendForgottenPasswordEmail = async (userEmail, userId) => {
   const verificationCode = generateVerificationCode();
 
   // Setup transporter (using Gmail)
@@ -122,7 +122,7 @@ exports.forgottenPassword = async (req, res) => {
 
     if (existing){
       // const hashed = await bcrypt.hash(password, 10);
-      const vcode= await sendForgttenPasswordEmail(email, existing._id)
+      const vcode= await sendForgottenPasswordEmail(email, existing._id)
       if(vcode){
         return res.status(201).json({message: 'Check your email address for further instructions.' });
       }else{

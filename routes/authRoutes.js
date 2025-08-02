@@ -66,7 +66,7 @@
  */
 
 const express = require('express');
-const { register, login, editProfile, changePassword, deleteMyAccount, verifyEmail, forgotenPassword } = require('../controllers/authController');
+const { register, login, editProfile, changePassword, deleteMyAccount, verifyEmail, forgottenPassword } = require('../controllers/authController');
 const {setUpPaymentMethod, CreatePayment, VerifyPayment}=require('../controllers/payment')
 const auth = require('../middleware/authMiddleware');
 const router = express.Router();
