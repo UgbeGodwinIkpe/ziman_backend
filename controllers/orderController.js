@@ -99,3 +99,11 @@ exports.updateOrderStatus = async (req, res) => {
   res.json({ message: 'Order updated', order });
 };
 
+// package resquest
+exports.pickupPackage = async (req, res) => {
+  // console.log(req.user)
+  const orders = await Order.find({ customer: req.user.id }).sort({ createdAt: -1 });
+  console.log({User_orders:orders})
+  res.json(orders);
+};
+

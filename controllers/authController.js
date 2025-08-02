@@ -94,13 +94,13 @@ exports.register = async (req, res) => {
    try {
     console.log(req.body)
     const { username, email, password, fullName, role } = req.body;
-    let emailAdd=email.toLowerCase()
+    // let emailAdd=email.toLowerCase()
     const existing = await User.findOne({ emailAdd });
     if (existing) return res.status(400).json({ message: 'Email already in use' });
     const hashed = await bcrypt.hash(password, 10);
-    const vcode= await sendVerificationEmail(emailAdd, username)
+    const vcode= await sendVerificationEmail(email, username)
     if(vcode){
-      const user = new User({ username, fullName, email:emailAdd, password: hashed, role, verificatin_code:vcode, refid: crypto.randomUUID() });
+      const user = new User({ username, fullName, email, password: hashed, role, verificatin_code:vcode, refid: crypto.randomUUID() });
       await user.save();
       console.log(user)
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -154,8 +154,8 @@ exports.verifyEmail=async(req, res)=>{
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  let emailAdd=email.toLowerCase()
-  const user = await User.findOne({ emailAdd });
+  // let emailAdd=email.toLowerCase()
+  const user = await User.findOne({ email });
   // console.log(password)
   // let isMatch=await bcrypt.compare(password, user.password)
   console.log(user)
