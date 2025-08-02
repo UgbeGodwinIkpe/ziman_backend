@@ -46,6 +46,49 @@ const sendVerificationEmail = async (userEmail, username) => {
     throw error;
   }
 };
+// send frgtten passwrd ink
+const sendForgttenPasswordEmail = async (userEmail, userId) => {
+  const verificationCode = generateVerificationCode();
+
+  // Setup transporter (using Gmail)
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "ugbegodwin7963@gmail.com",        // your Gmail
+      pass: process.env.GOOGLE_AUTH,          // use App Password, not your real password
+    },
+  });
+
+  const mailOptions = {
+    from: "Ziman App",
+    to: userEmail,
+    subject: "Reset Passwrd",
+    html: `
+      <h2>Email Verification</h2>
+      <h4>Hi there, </h4>
+      <h5>You just requested for a password reset. Ignore if it was not you.</h5>
+      <p>Kindy click the link below to reset your password</p>
+      <a style="text-decoration:none; background:blue; padding:5px; color:white;" href="https://ziman.com.ng/${userId}/${verificationCode}">${verificationCode}</a>
+      <hr>
+      <b>Or</b> copy the link and paste on your browser:
+      <p>https://ziman.com.ng/${userId}/${verificationCode}</p><br>
+      <hr>
+      <h5>Regards!<br>Godwin Ikpe Ugbe<br><i>For Ziman Developers Team</i></h5>
+      
+
+
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Verification email sent to:", userEmail);
+    return verificationCode;
+  } catch (error) {
+    console.error("Email error:", error);
+    throw error;
+  }
+};
 
 exports.register = async (req, res) => {
    try {
@@ -62,6 +105,31 @@ exports.register = async (req, res) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
       res.status(201).json({user:user,token:token, message: 'User registered' });
 
+    }
+    
+   } catch (error) {
+    console.log(error)
+    
+   }
+};
+
+// forgotten pasword
+exports.forgotenPassword = async (req, res) => {
+   try {
+     const {email} = req.body;
+     const existing = await User.findOne({ email });
+    //  console.log(req.body)
+
+    if (existing){
+      // const hashed = await bcrypt.hash(password, 10);
+      const vcode= await sendForgttenPasswordEmail(email, existing._id)
+      if(vcode){
+        return res.status(201).json({message: 'Check your email address for further instructions.' });
+      }else{
+        return res.status(501).json({message: 'Something went wrong. Try again later!' });
+      }
+    }else{
+      return res.status(404).json({ message: 'Email does not exist' });
     }
     
    } catch (error) {
