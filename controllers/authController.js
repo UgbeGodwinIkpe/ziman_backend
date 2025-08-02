@@ -129,7 +129,7 @@ exports.forgottenPassword = async (req, res) => {
         return res.status(501).json({message: 'Something went wrong. Try again later!' });
       }
     }else{
-      return res.status(404).json({data:"No data found", message: 'Email does not exist' });
+      return res.status(404).send('Email does not exist');
     }
     
    } catch (error) {
