@@ -118,7 +118,7 @@ exports.forgottenPassword = async (req, res) => {
    try {
      const {email} = req.body;
      const existing = await User.findOne({ email });
-     console.log(req.existing)
+     console.log({existing})
 
     if (existing){
       // const hashed = await bcrypt.hash(password, 10);
