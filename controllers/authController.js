@@ -95,7 +95,7 @@ exports.register = async (req, res) => {
     console.log(req.body)
     const { username, email, password, fullName, role } = req.body;
     // let emailAdd=email.toLowerCase()
-    const existing = await User.findOne({ emailAdd });
+    const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ message: 'Email already in use' });
     const hashed = await bcrypt.hash(password, 10);
     const vcode= await sendVerificationEmail(email, username)
