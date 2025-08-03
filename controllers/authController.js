@@ -106,6 +106,8 @@ exports.register = async (req, res) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
       res.status(201).json({user:user,token:token, message: 'User registered' });
 
+    }else{
+      return res.status(501).json({message: 'Smething went wrong. Try again later!' });
     }
     
    } catch (error) {
