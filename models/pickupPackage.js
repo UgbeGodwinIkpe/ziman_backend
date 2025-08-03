@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const pickupPackageSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  userId: { type: String },
   username:{type:String},
   phoneNumber:{type:String},
   pickupAddress: String,
   dropoffAddress: String, 
-  packageSize: { type: String, enum: ['small', 'medium', 'large'], default:"small" },
+  packageSize: { type: String, enum: ['Small', 'Medium', 'arge'], default:"Small" },
   packageWeight:{type:String},
   package_desc:{type:String, default:""},
   pickDateTime:{type:Date, default:Date.now},
