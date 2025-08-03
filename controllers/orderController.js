@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
-const Restaurant=require('../models/Restaurant')
+const PickupPackage=require('../models/pickupPackage');
+const Restaurant=require('../models/Restaurant');
 // const { io, onlineUsers } = require('./sockect');
 const { io, onlineUsers } = require('../server');
 
@@ -101,9 +102,28 @@ exports.updateOrderStatus = async (req, res) => {
 
 // package resquest
 exports.pickupPackage = async (req, res) => {
-  // console.log(req.user)
-  const orders = await Order.find({ customer: req.user.id }).sort({ createdAt: -1 });
-  console.log({User_orders:orders})
-  res.json(orders);
+  try {
+    console.log(req.user)
+    const {pickupAddress, dropoffAddress, username, userId, phoneNumber, packageSize, packageWeight, packageDesc, pickupDateTime, amount}=req.body
+    const newPickupRequest = new PickupPackage({
+      userId: userId,
+      username:username,
+      phoneNumber:phoneNumber,
+      pickupAddress:pickupAddress,
+      dropoffAddress:dropoffAddress,
+      packageSize:packageSize,
+      packageWeight:packageWeight,
+      amount:amount,
+      package_desc:packageDesc,
+      pickDateTime:pickupDateTime
+    });
+    await newPickupRequest.save();
+    console.log(newPickupRequest);
+    return res.status(201).json(newPickupRequest);
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(501).json({message:"Something went wrong."});
+  }
 };
 
