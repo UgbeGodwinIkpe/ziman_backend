@@ -56,13 +56,15 @@ const { createOrder, getUserOrders,
         getMerchantOrders, getOrderItems,
         updateOrderStatus,
         pickupPackage,
+        pickupOders,
      } = require('../controllers/orderController');
 const router = express.Router();
 
 router.post('/', auth, createOrder);
 router.post('/status', auth, updateOrderStatus)
 router.get('/user', auth, getUserOrders);
-router.post('/pickup', auth, pickupPackage)
+router.post('/pickup', auth, pickupPackage);
+router.get('/pickup', auth, pickupOders);
 router.get('/orders/:id', auth, getOrder);
 router.get('/merchant/:id', auth, getMerchantOrders)
 router.get('/assigned', riderAuth, getOrders)
