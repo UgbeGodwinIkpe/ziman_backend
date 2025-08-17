@@ -6,7 +6,7 @@ const pickupPackageSchema = new mongoose.Schema({
   phoneNumber:{type:String},
   pickupAddress: String,
   dropoffAddress: String, 
-  packageSize: { type: String, enum: ['Small', 'Medium', 'arge'], default:"Small" },
+  packageSize: { type: String, enum: ['Small', 'Medium', 'Large'], default:"Small" },
   packageWeight:{type:String},
   package_desc:{type:String, default:""},
   pickDateTime:{type:Date, default:Date.now},
