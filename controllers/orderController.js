@@ -129,6 +129,7 @@ exports.pickupPackage = async (req, res) => {
 
 // 
 exports.pickupOrders=async(req, res)=>{
+  console.log({userId: req.user.id})
   const orders = await PickupPackage.find({ userId: req.user.id }).sort({ createdAt: -1 });
   console.log({User_orders:orders})
   res.json(orders);
