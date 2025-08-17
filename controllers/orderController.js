@@ -106,7 +106,7 @@ exports.pickupPackage = async (req, res) => {
     console.log(req.user)
     const {pickupAddress, dropoffAddress, username, userId, phoneNumber, packageSize, packageWeight, packageDesc, pickupDateTime, amount}=req.body
     const newPickupRequest = new PickupPackage({
-      userId: userId,
+      userId: req.user.id,
       username:username,
       phoneNumber:phoneNumber,
       pickupAddress:pickupAddress,
@@ -129,7 +129,7 @@ exports.pickupPackage = async (req, res) => {
 
 // 
 exports.pickupOrders=async(req, res)=>{
-  console.log({userId: req.user._id})
+  console.log({userId: req.user.id})
   const orders = await PickupPackage.find({ userId: req.user._id }).sort({ createdAt: -1 });
   console.log({User_orders:orders})
   res.json(orders);
