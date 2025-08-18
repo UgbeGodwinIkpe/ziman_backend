@@ -96,7 +96,7 @@ exports.VerifyPayment= async (req, res) => {
         var order=await Order.findOneAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
         if(!order){
           //update pickup order
-          order=await PickupPackage.findByIdAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
+          order=await PickupPackage.findOneAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
     
         }
         console.log(order)
