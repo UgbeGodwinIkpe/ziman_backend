@@ -64,7 +64,7 @@ exports.CreatePayment= async (req, res) => {
       if(response.data.data?.reference){
         //update order
         var order=await Order.findByIdAndUpdate(orderId, {payRef:response.data.data.reference}, {new:true})
-        if(order.length<=0){
+        if(!order){
           //update pickup order
           order=await PickupPackage.findByIdAndUpdate(orderId, {payRef:response.data.data.reference}, {new:true})
     
@@ -94,7 +94,7 @@ exports.VerifyPayment= async (req, res) => {
       if(response.data.data?.status=='success'){
         //update order
         var order=await Order.findOneAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
-        if(order.length<=0){
+        if(!order){
           //update pickup order
           order=await PickupPackage.findByIdAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
     
