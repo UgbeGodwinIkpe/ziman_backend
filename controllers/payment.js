@@ -1,6 +1,8 @@
 const User = require('../models/User');
-const Order=require('../models/Order')
+const Order=require('../models/Order');
+const PickupPackage=require('../models/pickupPackage');
 const axios = require('axios');
+const { pickupPackage } = require('./orderController');
 require('dotenv').config();
 
 STRIPE_KEY=process.env.STRIPE_KEY
@@ -61,7 +63,12 @@ exports.CreatePayment= async (req, res) => {
       console.log({response:response.data.data})
       if(response.data.data?.reference){
         //update order
-        const order=await Order.findByIdAndUpdate(orderId, {payRef:response.data.data.reference}, {new:true})
+        var order=await Order.findByIdAndUpdate(orderId, {payRef:response.data.data.reference}, {new:true})
+        if(order.length<=0){
+          //update pickup order
+          order=await PickupPackage.findByIdAndUpdate(orderId, {payRef:response.data.data.reference}, {new:true})
+    
+        }
         console.log(order)
       }
       res.json(response.data);
@@ -86,7 +93,14 @@ exports.VerifyPayment= async (req, res) => {
       console.log(response.data)
       if(response.data.data?.status=='success'){
         //update order
-        const order=await Order.findOneAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
+        var order=await Order.findOneAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
+        if(order.length<=0){
+          //update pickup order
+          order=await PickupPackage.findByIdAndUpdate({payRef:response.data.data.reference}, {paid:true}, {new:true})
+    
+        }
+        console.log(order)
+
         console.log("Order Status: ", order)
 
         // send response to user

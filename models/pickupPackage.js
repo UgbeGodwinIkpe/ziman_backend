@@ -18,6 +18,7 @@ const pickupPackageSchema = new mongoose.Schema({
   },
   deliveryAgent: { type: mongoose.Schema.Types.ObjectId, ref: 'Rider' },
   isPickupRequest:{type:Boolean, default:true},
+  payRef:{type:String,default:''},
   createdAt: { type: Date, default: Date.now },
   paid:{type:Boolean, default:false},
 }, { timestamps: true });
