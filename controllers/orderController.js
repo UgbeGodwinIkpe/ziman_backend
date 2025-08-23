@@ -135,3 +135,11 @@ exports.pickupOrders=async(req, res)=>{
   res.json(orders);
 
 }
+
+exports.cancelPickupOrders=async(req, res)=>{
+  console.log({userId: req.user.id})
+  const orders = await PickupPackage.findByIdAndDelete(req.body.orderId );
+  console.log({deleted_orders:orders})
+  res.status(203).json({message:"Pickup request has been cancelled."});
+
+}
