@@ -71,6 +71,18 @@ router.get('/:id', auth, getOrder);
 router.post('/pickup', auth, pickupPackage);
 router.get('/pickup', auth, pickupOrders);
 router.delete('/cancel/pickup', auth, cancelPickupOrders);
-
+/*
+CastError: Cast to ObjectId failed for value "pickup" (type string) at path "_id" for model "Order"
+    at SchemaObjectId.cast (/opt/render/project/src/node_modules/mongoose/lib/schema/objectId.js:251:11)
+    at SchemaType.applySetters (/opt/render/project/src/node_modules/mongoose/lib/schemaType.js:1255:12)
+    at SchemaType.castForQuery (/opt/render/project/src/node_modules/mongoose/lib/schemaType.js:1673:17)
+    at cast (/opt/render/project/src/node_modules/mongoose/lib/cast.js:390:32)
+    at Query.cast (/opt/render/project/src/node_modules/mongoose/lib/query.js:4999:12)
+    at Query._castConditions (/opt/render/project/src/node_modules/mongoose/lib/query.js:2325:10)
+    at model.Query._findOne (/opt/render/project/src/node_modules/mongoose/lib/query.js:2648:8)
+    at model.Query.exec (/opt/render/project/src/node_modules/mongoose/lib/query.js:4548:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async exports.getOrder (/opt/render/project/src/controllers/orderController.js:35:17)
+*/
 
 module.exports = router;
