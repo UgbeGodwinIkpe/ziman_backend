@@ -77,7 +77,13 @@ exports.getMerchantOrders = async (req, res) => {
     .exec();
   res.json(orders);
 };
-
+exports.getMerchantSales=async (req, res) => {
+  // console.log(req.user)
+  const orders = await Order.find({ restaurant: req.params.id, paid:ture }).sort({ createdAt: -1 })
+    .populate('customer', 'username') // Only get the username field
+    .exec();
+  res.json(orders);
+};
 // update order status and notify user
 exports.updateOrderStatus = async (req, res) => {
   const { orderId, status } = req.body;
