@@ -69,7 +69,7 @@ router.get('/assigned', riderAuth, getOrders)
 router.get('/:orderId/items', auth, getOrderItems)
 router.get('/:id', auth, getOrder);
 router.post('/pickup', auth, pickupPackage);
-router.get('/pickup', auth, pickupOrders);
+router.get('/pickup_orders', auth, pickupOrders);
 router.delete('/cancel/pickup', auth, cancelPickupOrders);
 /*
 CastError: Cast to ObjectId failed for value "pickup" (type string) at path "_id" for model "Order"
