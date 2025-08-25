@@ -79,7 +79,7 @@ exports.getMerchantOrders = async (req, res) => {
 };
 exports.getMerchantSales=async (req, res) => {
   // console.log(req.user)
-  const orders = await Order.find({ restaurant: req.params.id, paid:ture }).sort({ createdAt: -1 })
+  const orders = await Order.find({ restaurant: req.params.id, paid:true }).sort({ createdAt: -1 })
     .populate('customer', 'username') // Only get the username field
     .exec();
   res.json(orders);
