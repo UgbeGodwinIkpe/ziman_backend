@@ -65,6 +65,7 @@ const { login, createUser, getAllUsers,
         createNotification,
         fetchNotifications,
         getMerchantSalesPayout,
+        updateMerchantSalesPayout,
      } = require('../controllers/adminController');
 // const{getUserOrders}=require('../controllers/orderController')
 const auth = require('../middleware/adminAuth');
@@ -88,5 +89,6 @@ router.get('/users/orders/all', auth, getAllOrdersAndCustomers);
 router.post('/notification', auth, createNotification);
 router.get('/notifications', auth, fetchNotifications);
 router.get('/salespayout', auth, getMerchantSalesPayout);
+router.post('/salespayout', auth, updateMerchantSalesPayout);
 
 module.exports = router;

@@ -148,21 +148,6 @@ exports.getMerchantSalesPayout=async (req, res) => {
     .exec();
   
   const bankAccounts = await BankAccount.find({ restaurant: { $in: orders.map(order => order.restaurant._id) } });
-  
-  // orders.forEach(order => {
-  //   const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
-  //   order.restaurant = order.restaurant.toObject();
-  //   order.restaurant.bankAccount = bankAccount;
-
-
-  // });
-  // console.log({pay:orders[0].restaurant})
-  // res.status(200).json(orders);
-  
-  // const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
-  //   .populate('restaurant', 'name') // Only get the username field
-  //   .exec();
-   
     const transformedOrders = orders.map(order => {
     const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
     return {
@@ -184,104 +169,18 @@ exports.getMerchantSalesPayout=async (req, res) => {
   }
 };
 
-/*
-  : 
-createdAt
-: 
-"2025-07-13T12:15:23.540Z"
-customer
-: 
-"686e72c8a7f1318e264a167b"
-dropoffAddress
-: 
-"mile1, port harcourt"
-isPickupRequest
-: 
-false
-items
-: 
-[{…}]
-packageSize
-: 
-"small"
-paid
-: 
-true
-payRef
-: 
-"00w2h4taby"
-paymentSettled
-: 
-false
-pickupAddress
-: 
-"W625+43R, Kuje 900105, Federal Capital Territory, Nigeria"
-refId
-: 
-"353682"
-restaurant
-: 
-address
-: 
-"WGVX+PJ5, Kurudu 900109, Federal Capital Territory, Nigeria"
-category
-: 
-"Food"
-createdAt
-: 
-"2025-06-11T12:13:20.644Z"
-email
-: 
-"joneshavilah@gmail.com"
-featured
-: 
-true
-images
-: 
-['uploads\\1749644000348-chicken_rep.jpg']
-menu
-: 
-[]
-menuItems
-: 
-[]
-name
-: 
-"Kitchen Republic"
-password
-: 
-"$2b$10$9XlKpP/e4AZxx8L0VzL10OK4CbqWc3TbUtCUSqoTZUOrhp16oXQim"
-phone
-: 
-"07041417901"
-rating
-: 
-4
-__v
-: 
-0
-_id
-: 
-"684972e0f67879337abe9f3f"
-[[Prototype]]
-: 
-Object
-scheduledAt
-: 
-"2025-07-13T12:15:23.540Z"
-status
-: 
-"ready-for-pick-up"
-totalPrice
-: 
-2300
-updatedAt
-: 
-"2025-08-19T11:42:44.652Z"
-__v
-: 
-0
-_id
-: 
-"6873a35b74da70f9fa018c13"
-*/
+// update payment releases
+exports.updateMerchantSalesPayout=async (req, res) => {
+  try {
+    // console.log(req.user)
+  const orders = await Order.findByIdAndUpdate(req.body.orderId, { paymentSettled: true })
+  
+  res.status(200).json({msg:"Success. Merchant will be notified to check her bank account history."});
+
+  
+  } catch (error) {
+     console.log(error)
+    res.status(501).json({message:"Something went wrong..."});
+    
+  }
+};
