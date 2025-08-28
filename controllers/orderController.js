@@ -1,7 +1,7 @@
 const Order = require('../models/Order');
 const PickupPackage=require('../models/pickupPackage');
 const Restaurant=require('../models/Restaurant');
-const BankAccount=require('../models/bankAccountt');
+const BankAccount=require('../models/bankAccount');
 // const { io, onlineUsers } = require('./sockect');
 const { io, onlineUsers } = require('../server');
 

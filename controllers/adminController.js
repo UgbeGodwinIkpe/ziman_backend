@@ -5,7 +5,7 @@ const Order=require('../models/Order');
 const Notification=require('../models/notification')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const BankAccount=require('../models/bankAccountt');
+const BankAccount=require('../models/bankAccount');
 
 
 
