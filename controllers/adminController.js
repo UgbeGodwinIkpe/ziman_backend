@@ -152,7 +152,7 @@ exports.getMerchantSalesPayout=async (req, res) => {
   orders.forEach(order => {
     order.restaurant.bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString()) || "Acct Details";
   });
-  console.log({pay:orders.restaurant})
+  console.log({pay:orders[0].restaurant})
   res.status(200).json(orders);
   
   // const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
