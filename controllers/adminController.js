@@ -161,6 +161,21 @@ exports.getMerchantSalesPayout=async (req, res) => {
   // const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
   //   .populate('restaurant', 'name') // Only get the username field
   //   .exec();
+  /* 
+    const transformedOrders = orders.map(order => {
+    const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
+    return {
+      ...order.toObject(),
+      restaurant: {
+        ...order.restaurant.toObject(),
+        bankAccount,
+      },
+    };
+  });
+
+  res.json(transformedOrders);
+
+  */
   } catch (error) {
      console.log(error)
     res.status(501).json({message:"Something went wrong..."});
