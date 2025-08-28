@@ -5,6 +5,7 @@ const Order=require('../models/Order');
 const Notification=require('../models/notification')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const BankAccount=require('../models/bankAccountt');
 
 
 
@@ -135,4 +136,24 @@ exports.fetchNotifications=async(req, res)=>{
    }
 
 
+};
+
+// get sales payments 
+exports.getMerchantSalesPayout=async (req, res) => {
+  // console.log(req.user)
+  const orders = await Order.find({ paid: true })
+    .sort({ createdAt: -1 })
+    .populate('restaurant')
+    .exec();
+  
+  const bankAccounts = await BankAccount.find({ restaurant: { $in: orders.map(order => order.restaurant._id) } });
+  
+  orders.forEach(order => {
+    order.restaurant.bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
+  });
+  
+  const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
+    .populate('restaurant', 'name') // Only get the username field
+    .exec();
+  res.json(orders);
 };
