@@ -149,20 +149,20 @@ exports.getMerchantSalesPayout=async (req, res) => {
   
   const bankAccounts = await BankAccount.find({ restaurant: { $in: orders.map(order => order.restaurant._id) } });
   
-  orders.forEach(order => {
-    const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
-    order.restaurant = order.restaurant.toObject();
-    order.restaurant.bankAccount = bankAccount;
+  // orders.forEach(order => {
+  //   const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
+  //   order.restaurant = order.restaurant.toObject();
+  //   order.restaurant.bankAccount = bankAccount;
 
 
-  });
-  console.log({pay:orders[0].restaurant})
-  res.status(200).json(orders);
+  // });
+  // console.log({pay:orders[0].restaurant})
+  // res.status(200).json(orders);
   
   // const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
   //   .populate('restaurant', 'name') // Only get the username field
   //   .exec();
-  /* 
+   
     const transformedOrders = orders.map(order => {
     const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
     return {
@@ -173,10 +173,10 @@ exports.getMerchantSalesPayout=async (req, res) => {
       },
     };
   });
+  console.log({pay:transformedOrders})
+  res.status(200).json(transformedOrders);
 
-  res.json(transformedOrders);
-
-  */
+  
   } catch (error) {
      console.log(error)
     res.status(501).json({message:"Something went wrong..."});
