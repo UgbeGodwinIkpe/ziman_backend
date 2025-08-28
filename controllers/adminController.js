@@ -140,7 +140,8 @@ exports.fetchNotifications=async(req, res)=>{
 
 // get sales payments 
 exports.getMerchantSalesPayout=async (req, res) => {
-  // console.log(req.user)
+  try {
+    // console.log(req.user)
   const orders = await Order.find({ paid: true })
     .sort({ createdAt: -1 })
     .populate('restaurant')
@@ -151,9 +152,13 @@ exports.getMerchantSalesPayout=async (req, res) => {
   orders.forEach(order => {
     order.restaurant.bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
   });
+  res.status(200).json(orders);
   
-  const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
-    .populate('restaurant', 'name') // Only get the username field
-    .exec();
-  res.json(orders);
+  // const orders1 = await Order.find({paid:true }).sort({ createdAt: -1 })
+  //   .populate('restaurant', 'name') // Only get the username field
+  //   .exec();
+  } catch (error) {
+    res.status(501).json({message:"Something went wrong..."});
+    
+  }
 };
