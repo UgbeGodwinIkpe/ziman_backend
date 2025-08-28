@@ -150,9 +150,10 @@ exports.getMerchantSalesPayout=async (req, res) => {
   const bankAccounts = await BankAccount.find({ restaurant: { $in: orders.map(order => order.restaurant._id) } });
   
   orders.forEach(order => {
-    order.restaurant.bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString()) || "Acct Details";
+    const bankAccount = bankAccounts.find(account => account.restaurant.toString() === order.restaurant._id.toString());
     order.restaurant = order.restaurant.toObject();
     order.restaurant.bankAccount = bankAccount;
+
 
   });
   console.log({pay:orders[0].restaurant})
