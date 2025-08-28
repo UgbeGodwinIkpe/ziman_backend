@@ -158,6 +158,7 @@ exports.getMerchantSalesPayout=async (req, res) => {
   //   .populate('restaurant', 'name') // Only get the username field
   //   .exec();
   } catch (error) {
+     console.log(error)
     res.status(501).json({message:"Something went wrong..."});
     
   }
