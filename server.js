@@ -59,8 +59,8 @@ const riderRoutes=require("./routes/riderRoutes")
 // app.use(cors());
 app.use(cors({
   origin: ['*','http://127.0.0.1:5500','http://localhost:62087', 'http://localhost:57025', 'https://ziman.com.ng', 'http://localhost:55128', 'http://localhost:64823', 'http://localhost:51294', 'http://localhost:49245'], // Allow this origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', "FETCH", "UPDATE", "PATCH"],
-  credentials: true,
+   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  // credentials: true,
 }));
 app.use(express.json());
 // app.use(bodyParser.json());
