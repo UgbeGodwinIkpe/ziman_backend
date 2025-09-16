@@ -107,7 +107,7 @@ exports.register = async (req, res) => {
       res.status(201).json({user:user,token:token, message: 'User registered' });
 
     }else{
-      return res.status(501).json({message: 'Smething went wrong. Try again later!' });
+      return res.status(501).json({message: 'Something went wrong. Try again later!' });
     }
     
    } catch (error) {
@@ -164,7 +164,7 @@ exports.login = async (req, res) => {
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
   res.json({ token, user });
 };
 
