@@ -228,9 +228,35 @@ exports.resetPassword=async (req, res) => {
         return res.status(404).json({statusCde:404,  message: 'Something went wrong' });
       }
         user.password = hashed;
+        let user_email=user.email
         await user.save();
 
         console.log(user)
+        // Setup transporter (using Gmail)
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: "ugbegodwin7963@gmail.com",        // your Gmail
+            pass: process.env.GOOGLE_AUTH,          // use App Password, not your real password
+          },
+        });
+        const mailOptions = {
+          from: "Ziman App",
+          to: user_email,
+          subject: "Ziman App User Password Changed",
+          html: `
+            <h2>Password Changed</h2>
+            <h4>Your new password is: ${password}</h4>
+           
+            <hr>
+            <h5>Regards,<br>Godwin Ikpe Ugbe<br>Software Engineer<br><u>For Ziman Team</u></h5>
+            
+
+
+          `,
+        };
+        await transporter.sendMail(mailOptions);
+
         res.status(203).json({statusCde:203, message:"Password reset successfulled. You can now return back to the mobile app and login."});
       }
     
