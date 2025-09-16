@@ -215,8 +215,8 @@ exports.editProfile=async (req, res) => {
 exports.resetPassword=async (req, res) => {
   try {
     // const userId = req.params;
-    console.log("ID",userId)
     const {password, confirmPassword, userId}=req.body
+    // console.log("ID",userId)
     if(password.length<6){
       return res.status(409).json({statusCde:409, message: 'Password must be at least 6 chars long!' });
     }else if(password != confirmPassword){
