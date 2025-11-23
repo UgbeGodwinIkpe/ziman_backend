@@ -3,11 +3,13 @@ const Order = require('../models/Order');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
+import { Resend } from "resend";
+
 
 // Generate a 6-digit code
-const generateVerificationCode = () => Math.floor(100000 + Math.random() * 900000).toString();
+const generateVerificationCode1 = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-const sendVerificationEmail = async (userEmail, username) => {
+const sendVerificationEmail1 = async (userEmail, username) => {
   const verificationCode = generateVerificationCode();
 
   // Setup transporter (using Gmail)
@@ -39,6 +41,36 @@ const sendVerificationEmail = async (userEmail, username) => {
 
   try {
     await transporter.sendMail(mailOptions);
+    console.log("Verification email sent to:", userEmail);
+    return verificationCode;
+  } catch (error) {
+    console.error("Email error:", error);
+    throw error;
+  }
+};
+// sending verificatin with resend
+const generateVerificationCode = () =>
+  Math.floor(100000 + Math.random() * 900000).toString();
+
+const sendVerificationEmail = async (userEmail, username) => {
+  const verificationCode = generateVerificationCode();
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  try {
+    await resend.emails.send({
+      from: "Ziman <onboarding@resend.dev>",
+      to: userEmail,
+      subject: "Your Verification Code",
+      html: `
+        <h2>Email Verification</h2>
+        <h4>Hi ${username}, welcome to Ziman App.</h4>
+        <p>Your verification code is:</p>
+        <h1 style="color: blue;">${verificationCode}</h1>
+        <p>This code expires in 10 minutes.</p>
+        <hr/>
+        <h5>Regards,<br>Godwin Ikpe Ugbe<br>Software Engineer</h5>
+      `,
+    });
+
     console.log("Verification email sent to:", userEmail);
     return verificationCode;
   } catch (error) {
