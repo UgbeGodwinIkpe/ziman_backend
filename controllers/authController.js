@@ -3,7 +3,7 @@ const Order = require('../models/Order');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
-import { Resend } from "resend";
+const { Resend } =require("resend");
 
 
 // Generate a 6-digit code
