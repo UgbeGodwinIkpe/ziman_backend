@@ -20,7 +20,7 @@ const sendVerificationEmail = async (userEmail, username) => {
   });
 
   const mailOptions = {
-    from: "Ziman App ugbegodwin7963@gmail.com",
+    from: "Ziman App",
     to: userEmail,
     subject: "Your Verification Code",
     html: `
@@ -107,6 +107,7 @@ exports.register = async (req, res) => {
       res.status(201).json({user:user,token:token, message: 'User registered' });
 
     }else{
+      console.log("Something went wrong. Try again later!")
       return res.status(501).json({message: 'Something went wrong. Try again later!' });
     }
     
