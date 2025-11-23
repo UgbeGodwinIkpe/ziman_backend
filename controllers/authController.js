@@ -57,7 +57,7 @@ const sendVerificationEmail = async (userEmail, username) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     await resend.emails.send({
-      from: "Ziman <onboarding@resend.dev>",
+      from: "Ziman App <onboarding@resend.dev>",
       to: userEmail,
       subject: "Your Verification Code",
       html: `
@@ -83,18 +83,12 @@ const sendForgottenPasswordEmail = async (userEmail, userId) => {
   const verificationCode = generateVerificationCode();
 
   // Setup transporter (using Gmail)
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "ugbegodwin7963@gmail.com",        // your Gmail
-      pass: process.env.GOOGLE_AUTH,          // use App Password, not your real password
-    },
-  });
-
-  const mailOptions = {
-    from: "Ziman App",
-    to: userEmail,
-    subject: "Reset Passwrd",
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  try {
+    await resend.emails.send({
+      from: "Ziman App <onboarding@resend.dev>",
+      to: userEmail,
+      subject: "Reset Password",
     html: `
       <h2>Email Verification</h2>
       <h4>Hi there, </h4>
@@ -106,14 +100,10 @@ const sendForgottenPasswordEmail = async (userEmail, userId) => {
       <p>https://ziman.com.ng/resetpass.html?u=${userId}?c=${verificationCode}</p><br>
       <hr>
       <h5>Regards!<br>Godwin Ikpe Ugbe<br><i>For Ziman Developers Team</i></h5>
-      
-
 
     `,
-  };
+    });
 
-  try {
-    await transporter.sendMail(mailOptions);
     console.log("Verification email sent to:", userEmail);
     return verificationCode;
   } catch (error) {
