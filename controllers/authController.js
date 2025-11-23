@@ -97,7 +97,9 @@ exports.register = async (req, res) => {
     // let emailAdd=email.toLowerCase()
     const existing = await User.findOne({ email });
     if (existing) {
+
       console.log('Email already in use')
+      console.log(existing)
       return res.status(400).json({ message: 'Email already in use' });
     }
     const hashed = await bcrypt.hash(password, 10);
