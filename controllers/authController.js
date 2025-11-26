@@ -57,7 +57,7 @@ const sendVerificationEmail = async (userEmail, username) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     await resend.emails.send({
-      from: "Ziman App <onboarding@resend.dev>",
+      from: "Ziman App <onboarding@ziman.com.ng>",
       to: userEmail,
       subject: "Your Verification Code",
       html: `
@@ -86,7 +86,7 @@ const sendForgottenPasswordEmail = async (userEmail, userId) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     await resend.emails.send({
-      from: "Ziman App <onboarding@resend.dev>",
+      from: "Ziman App <onboarding@ziman.com.ng>",
       to: userEmail,
       subject: "Reset Password",
     html: `
