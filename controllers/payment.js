@@ -55,7 +55,7 @@ exports.CreatePayment= async (req, res) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+            Authorization: `Bearer ${LIVE_PAYSTACK_SECRETE_KEY}`,
             "Content-Type": "application/json",
           },
         }
@@ -86,7 +86,7 @@ exports.VerifyPayment= async (req, res) => {
         `https://api.paystack.co/transaction/verify/${reference}`,
         {
           headers: {
-            Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+            Authorization: `Bearer ${LIVE_PAYSTACK_SECRETE_KEY}`,
           },
         }
       );
