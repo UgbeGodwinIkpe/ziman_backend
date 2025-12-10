@@ -11,7 +11,7 @@ const stripe = require("stripe")(STRIPE_KEY, {
     apiVersion: STRIPE_API_VERSION,
   });
 
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+const PAYSTACK_SECRET_KEY = process.env.LIVE_PAYSTACK_SECRETE_KEY;
 
 
 // payment method settup
@@ -55,7 +55,7 @@ exports.CreatePayment= async (req, res) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${LIVE_PAYSTACK_SECRETE_KEY}`,
+            Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
             "Content-Type": "application/json",
           },
         }
@@ -86,7 +86,7 @@ exports.VerifyPayment= async (req, res) => {
         `https://api.paystack.co/transaction/verify/${reference}`,
         {
           headers: {
-            Authorization: `Bearer ${LIVE_PAYSTACK_SECRETE_KEY}`,
+            Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
           },
         }
       );
