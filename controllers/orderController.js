@@ -143,7 +143,18 @@ exports.pickupOrders=async(req, res)=>{
 
 }
 
-
+// fetch all pickup requests
+exports.getPickupRequests = async (req, res) => {
+  try {
+    console.log("I can reach getPickupRequests")
+    const orders = await PickupPackage.find({paid:true}).sort({ createdAt: -1 });
+    console.log(orders)
+    res.status(200).json(orders);
+    
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 exports.cancelPickupOrders=async(req, res)=>{
   console.log({userId: req.user.id})

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const pickupPackageSchema = new mongoose.Schema({
-  userId: { type: String },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   username:{type:String},
   phoneNumber:{type:String},
   pickupAddress: String,
