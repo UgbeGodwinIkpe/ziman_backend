@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const Order = require("../models/Order");
+const pickupPackage = require("../models/pickupPackage");
 const riderAuth = require("../middleware/riderAuth");
 const Rider = require("../models/rider");
 const router = express.Router();
@@ -49,6 +50,15 @@ router.post("/accept/:id", riderAuth, async (req, res) => {
 router.post("/:id/status", riderAuth, async (req, res) => {
     const orderStatus=req.body.status;
     const order = await Order.findByIdAndUpdate(req.params.id, {
+      status: orderStatus,
+    }, { new: true });
+    console.log(order)
+    res.json(order);
+});
+// update pickup request status
+router.post("/:id/pickup/status", riderAuth, async (req, res) => {
+    const orderStatus=req.body.status;
+    const order = await pickupPackage.findByIdAndUpdate(req.params.id, {
       status: orderStatus,
     }, { new: true });
     console.log(order)
